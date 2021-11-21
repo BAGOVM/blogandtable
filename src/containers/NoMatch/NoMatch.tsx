@@ -1,17 +1,19 @@
 import React from 'react';
 import { Redirect, useHistory, useLocation } from 'react-router';
-import { Result, Button } from 'antd';
+import { Result, Button } from "antd";
 
-export const NoMatch = () => {
-  const location = useLocation();
+const NoMatch = () => {
+  const location: any = useLocation();
   const history = useHistory();
-  console.log(location);
 
   const backHome = () => {
     history.push('/')
   }
 
-  if (!location?.from?.pathname) return <Redirect to="/" />
+  if (!location?.from?.pathname){
+     return <Redirect to="/"/>
+  }
+
 
   return (
     <div className='page404'>
@@ -24,3 +26,4 @@ export const NoMatch = () => {
     </div>
   );
 };
+export default NoMatch;

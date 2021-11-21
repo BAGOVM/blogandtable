@@ -2,10 +2,10 @@ import "./EditPostForm.css";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { useEffect, useState } from "react";
 
-export const EditPostForm = (props) => {
+export const EditPostForm = ({selectedPost,editBlogPost,handleEditFormHide}) => {
 
-  const [postTitle, setPostTitle] = useState(props.selectedPost.title)
-  const [postDesc, setPostDesc] = useState(props.selectedPost.description)
+  const [postTitle, setPostTitle] = useState(selectedPost.title)
+  const [postDesc, setPostDesc] = useState(selectedPost.description)
 
   const handlePostTitleChange = (e) => {
     setPostTitle(e.target.value)
@@ -18,32 +18,32 @@ export const EditPostForm = (props) => {
   const savePost = (e) => {
     e.preventDefault()
     const post = {
-      id: props.selectedPost.id,
+      id: selectedPost.id,
       title: postTitle,
       description: postDesc,
-      liked: props.selectedPost.liked,
+      liked: selectedPost.liked,
     }
 
-    props.editBlogPost(post);
-    props.handleEditFormHide()
+    editBlogPost(post);
+    handleEditFormHide()
   }
 
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape") {
-        props.handleEditFormHide();
+        handleEditFormHide();
       }
     };
     window.addEventListener('keyup', handleEscape)
 
     return () => window.removeEventListener('keyup', handleEscape)
-  }, [props])
+  }, [selectedPost,editBlogPost,handleEditFormHide])
 
-  const handleEditFormHide = props.handleEditFormHide;
+  const handleEditFormHides = handleEditFormHide;
   return (
     <>
       <form className="editPostForm" onSubmit={savePost}>
-        <button className="hideBtn" onClick={handleEditFormHide}>
+        <button className="hideBtn" onClick={handleEditFormHides}>
           <CancelIcon />
         </button>
         <h2>Редактирование поста</h2>
@@ -78,7 +78,7 @@ export const EditPostForm = (props) => {
           </button>
         </div>
       </form>
-      <div onClick={handleEditFormHide} className="overlay"></div>
+      <div onClick={handleEditFormHides} className="overlay"></div>
     </>
   );
 }

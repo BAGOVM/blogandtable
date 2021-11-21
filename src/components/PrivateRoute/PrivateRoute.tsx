@@ -1,7 +1,7 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router'
 
-export const PrivateRoute = ({ isLoggedIn, children, path }) => {
+const PrivateRoute = ({ isLoggedIn, children, path }) => {
   return (
     <Route
       path={path}
@@ -12,3 +12,4 @@ export const PrivateRoute = ({ isLoggedIn, children, path }) => {
     />
   )
 }
+export default PrivateRoute

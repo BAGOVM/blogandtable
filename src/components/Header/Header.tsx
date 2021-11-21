@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import styles from './Header.module.css';
+import './Header.css';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 
 export const Header = ({ isLoggedIn, setIsLoggedIn, userName }) => {
@@ -10,7 +10,7 @@ export const Header = ({ isLoggedIn, setIsLoggedIn, userName }) => {
   };
 
   return (
-    <header className={styles.mainHeader}>
+    <header className="mainHeader">
       {isLoggedIn ? (
         <nav>
           Добро пожаловать, &nbsp;<strong>{userName}</strong>

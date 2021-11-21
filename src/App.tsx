@@ -14,7 +14,7 @@ import { BlogPage } from './containers/BlogPage/BlogPage';
 import { LoginPage } from './containers/LoginPage/LoginPage';
 import { NoMatch } from './containers/NoMatch/NoMatch';
 
-export function App() {
+const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem('isLoggedIn') === 'true'
   );
@@ -67,3 +67,4 @@ export function App() {
     </Router>
   );
 }
+export default App

@@ -3,15 +3,15 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import { useState } from "react";
 
 export const AddPostForm = ({ addNewBlogPost, handleAddFormHide }) => {
-  const [postTitle, setPostTitle] = useState("");
-  const [postDesc, setPostDesc] = useState("");
+  const [postTitle, setPostTitle] = useState<string>("");
+  const [postDesc, setPostDesc] = useState<string>("");
 
   const handlePostTitleChange = (e) => {
-    setPostTitle(e.target.value);
+    setPostTitle(e?.target?.value);
   };
 
   const handlePostDescChange = (e) => {
-    setPostDesc(e.target.value);
+    setPostDesc(e?.target?.value);
   };
 
   const createPost = (e) => {
@@ -38,7 +38,7 @@ export const AddPostForm = ({ addNewBlogPost, handleAddFormHide }) => {
     return () => {
       window.removeEventListener("keyup", handleEscape);
     };
-  }, []);
+  });
 
   return (
     <>

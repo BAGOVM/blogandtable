@@ -2,7 +2,7 @@ import './BlogCard.css';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 
-export const BlogCard = ({
+const BlogCard = ({
   title,
   description,
   date,
@@ -39,3 +39,4 @@ export const BlogCard = ({
     </div>
   );
 };
+export default BlogCard;

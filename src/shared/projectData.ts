@@ -1,6 +1,14 @@
-export const postsUrl = 'https://61993e899022ea0017a7aded.mockapi.io/Posts/'
+export const postsUrl = 'https://61993e899022ea0017a7aded.mockapi.io/Posts/';
 
-export const posts = [
+
+interface IPost{
+  id: number;
+  title: string;
+  description: string;
+  liked: boolean;
+}
+
+export const posts: IPost[] = [
   {
     id: 1,
     title: "Post 1",

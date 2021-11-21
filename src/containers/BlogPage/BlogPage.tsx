@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import './BlogPage.css';
 import { AddPostForm } from './components/AddPostForm';
-import { BlogCard } from './components/BlogCard';
+import BlogCard from './components/BlogCard';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { EditPostForm } from './components/EditPostForm';
 import { postsUrl } from '../../shared/projectData';
@@ -13,20 +13,20 @@ import { Pagination } from 'antd';
 let source;
 
 export const BlogPage = ({ userName, isLoggedIn, setIsLoggedIn }) => {
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [showEditForm, setShowEditForm] = useState(false);
-  const [blogArr, setBlogArr] = useState([]);
-  const [isPending, setIsPending] = useState(false);
-  const [selectedPost, setSelectedPost] = useState({});
+  const [showAddForm, setShowAddForm] = useState<boolean>(false);
+  const [showEditForm, setShowEditForm] = useState<boolean>(false);
+  const [blogArr, setBlogArr] = useState<any[]>([]);
+  const [isPending, setIsPending] = useState<boolean>(false);
+  const [selectedPost, setSelectedPost] = useState<any>({});
 
   const history = useHistory();
   const location = useLocation();
 
   const [totalElementsCount, setTotalElementsCount] = useState(0);
   const [currentPageElements, setCurrentPageElements] = useState([])
-
+  let nedValue: any = location?.search.split('=')[1];
   const elementsPerPage = 2;
-  const [offset, setOffset] = useState((location?.search.split('=')[1] - 1) * elementsPerPage || 0);
+  const [offset, setOffset] = useState(nedValue * elementsPerPage || 0);
   const pagesCount = Math.ceil(totalElementsCount / elementsPerPage);
 
   const fetchPosts = () => {
@@ -153,8 +153,11 @@ export const BlogPage = ({ userName, isLoggedIn, setIsLoggedIn }) => {
         setIsLoggedIn={setIsLoggedIn}
       />
       <div className='blogPage'>
-        {showAddForm && (
+        
+        {
+        showAddForm && (
           <AddPostForm
+            //@ts-ignore
             blogArr={blogArr}
             addNewBlogPost={addNewBlogPost}
             handleAddFormHide={handleAddFormHide}

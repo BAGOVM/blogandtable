@@ -2,21 +2,26 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 import "./LoginPage.css";
 
-export const LoginPage = ({
+interface LoginPageProps{
+  setIsLoggedIn: Function;
+  setUserName: Function;
+}
+
+const LoginPage: React.FC<LoginPageProps> = ({
   setIsLoggedIn,
   setUserName
 }) => {
 
-  const history = useHistory()
+  const history: any = useHistory()
 
-  const [login, setLogin] = useState('');
-  const [password, setPassword] = useState('');
+  const [login, setLogin] = useState<any>('');
+  const [password, setPassword] = useState<any>('');
 
-  const handleLoginChange = (e) => {
+  const handleLoginChange = (e: any) => {
     setLogin(e.target.value)
   }
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: any) => {
     setPassword(e.target.value)
   }
 
@@ -24,6 +29,7 @@ export const LoginPage = ({
     e.preventDefault();
 
     if (login === 'admin' && password === '123456') {
+      //@ts-ignore
       localStorage.setItem('isLoggedIn', true);
       localStorage.setItem('userName', login);
       setUserName(login);
@@ -69,3 +75,4 @@ export const LoginPage = ({
     </h1>
   );
 };
+export default LoginPage
