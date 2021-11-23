@@ -9,6 +9,9 @@ import EditPostForm from './components/EditPostForm';
 import { postsUrl } from '../../shared/projectData';
 import Header from '../../components/Header/Header';
 import { Pagination } from 'antd';
+import useStyles from "../../styles"
+import stores from "../../store/index"
+import CryptoTable from "../../components/CryptoTable/CryptoTable"
 
 let source: any;
 
@@ -43,22 +46,22 @@ const BlogPage: React.FC<BlogPageProps> = ({ userName, isLoggedIn, setIsLoggedIn
   const elementsPerPage = 2;
   const [offset, setOffset] = useState(nedValue * elementsPerPage || 0);
   const pagesCount = Math.ceil(totalElementsCount / elementsPerPage);
+  const classes: any = useStyles();
 
   const fetchPosts = () => {
     source = axios.CancelToken.source();
     axios
       .get(postsUrl, { cancelToken: source.token })
-      .then((response) => {
-        setBlogArr(response.data);
-        setTotalElementsCount(response.data.length);
-        setCurrentPageElements(response.data.slice(offset, offset + elementsPerPage))
+      .then(response => {
+        setBlogArr(response?.data);
+        setTotalElementsCount(response?.data?.length);
+        setCurrentPageElements(response?.data?.slice(offset, offset + elementsPerPage))
         setIsPending(false);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
   const handlePageClick = (pageNumber: number) => {
     const offset = (pageNumber - 1) * elementsPerPage;
     history.push(`/blog?page=${pageNumber}`)
@@ -66,7 +69,6 @@ const BlogPage: React.FC<BlogPageProps> = ({ userName, isLoggedIn, setIsLoggedIn
     setCurrentPageElements(blogArr.slice(offset, offset + elementsPerPage))
   };
 
-  console.log(offset)
 
   useEffect(() => {
     fetchPosts();
@@ -84,7 +86,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ userName, isLoggedIn, setIsLoggedIn
         .delete(`${postsUrl}${blogPost.id}`)
         .then((response) => {
           console.log('Пост удален => ', response.data);
-          fetchPosts();
+          //fetchPosts();
         })
         .catch((err) => {
           console.log(err);
@@ -98,7 +100,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ userName, isLoggedIn, setIsLoggedIn
       .post(postsUrl, blogPost)
       .then((response) => {
         console.log('Пост создан =>', response.data);
-        fetchPosts();
+        //fetchPosts();
       })
       .catch((err) => {
         console.log(err);
@@ -111,7 +113,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ userName, isLoggedIn, setIsLoggedIn
       .put(`${postsUrl}${updatedBlogPost.id}`, updatedBlogPost)
       .then((response) => {
         console.log('Пост отредактирован =>', response.data);
-        fetchPosts();
+       // fetchPosts();
       })
       .catch((err) => {
         console.log(err);
@@ -119,15 +121,15 @@ const BlogPage: React.FC<BlogPageProps> = ({ userName, isLoggedIn, setIsLoggedIn
   };
 
   const handleAddFormShow = () => setShowAddForm(true);
-  
+
   const handleAddFormHide = () => setShowAddForm(false);
-  
+
   const handleEditFormShow = () => setShowEditForm(true);
-  
+
   const handleEditFormHide = () => setShowEditForm(false);
-  
+
   const handleSelectPost = (blogPost: IPost) => setSelectedPost(blogPost);
-  
+
   
 
   const isAdmin = isLoggedIn && userName === 'admin';
@@ -149,7 +151,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ userName, isLoggedIn, setIsLoggedIn
 
   if (currentPageElements.length === 0) return <h1>Загружаю данные...</h1>;
 
-  const postsOpactiy = isPending ? 0.5 : 1;
+  const postsOpacity = isPending ? 0.5 : 1;
 
   return (
     <>
@@ -188,7 +190,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ userName, isLoggedIn, setIsLoggedIn
             </div>
           )}
 
-          <div className='posts' style={{ opacity: postsOpactiy }}>
+          <div className='posts' style={{ opacity: postsOpacity }}>
             {blogPosts}
             {pagesCount > 1 && (
               <Pagination
@@ -198,8 +200,10 @@ const BlogPage: React.FC<BlogPageProps> = ({ userName, isLoggedIn, setIsLoggedIn
                 pageSize={elementsPerPage}
                 showSizeChanger={false}
               />
+              
             )}
           </div>
+          <CryptoTable classes={classes} currenciesStore={stores.currenciesStore} converterStore={stores.converterStore}/>
           {isPending && <CircularProgress className='preloader' />}
         </>
       </div>

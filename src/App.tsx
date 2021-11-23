@@ -1,16 +1,11 @@
 import React,{ useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from 'react-router-dom';
+import {BrowserRouter as Router, Route,Switch,Redirect,} from 'react-router-dom';
 import './App.css';
-import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import BlogPage from './containers/BlogPage/BlogPage';
 import LoginPage from './containers/LoginPage/LoginPage';
 import NoMatch from './containers/NoMatch/NoMatch';
+
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -39,6 +34,7 @@ const App = () => {
                 //@ts-ignore
                 setIsLoggedIn={setIsLoggedIn}
               />
+              
             </Route>
 
             <Route exact path='/404'>
