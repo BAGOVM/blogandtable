@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React,{ useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -6,19 +6,17 @@ import {
   Redirect,
 } from 'react-router-dom';
 import './App.css';
-import { Footer } from './components/Footer/Footer';
-import { Header } from './components/Header/Header';
-import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
-import { PublicRoute } from './components/PublicRoute/PublicRoute';
-import { BlogPage } from './containers/BlogPage/BlogPage';
-import { LoginPage } from './containers/LoginPage/LoginPage';
-import { NoMatch } from './containers/NoMatch/NoMatch';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import BlogPage from './containers/BlogPage/BlogPage';
+import LoginPage from './containers/LoginPage/LoginPage';
+import NoMatch from './containers/NoMatch/NoMatch';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem('isLoggedIn') === 'true'
   );
-  const [userName, setUserName] = useState(localStorage.getItem('userName'));
+  const [userName, setUserName] = useState<any>(localStorage.getItem('userName'));
 
   return (
     <Router>
@@ -38,6 +36,7 @@ const App = () => {
               <BlogPage
                 userName={userName}
                 isLoggedIn={isLoggedIn}
+                //@ts-ignore
                 setIsLoggedIn={setIsLoggedIn}
               />
             </Route>

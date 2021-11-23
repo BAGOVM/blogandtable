@@ -1,21 +1,28 @@
 import "./EditPostForm.css";
 import CancelIcon from "@material-ui/icons/Cancel";
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
+import { IPost } from "../BlogPage";
 
-export const EditPostForm = ({selectedPost,editBlogPost,handleEditFormHide}) => {
+interface EditPostProps{
+  selectedPost: IPost;
+  editBlogPost: (post: IPost) => void;
+  handleEditFormHide: () => void;
+}
+
+const EditPostForm: React.FC<EditPostProps> = ({selectedPost,editBlogPost,handleEditFormHide}) => {
 
   const [postTitle, setPostTitle] = useState(selectedPost.title)
   const [postDesc, setPostDesc] = useState(selectedPost.description)
 
-  const handlePostTitleChange = (e) => {
+  const handlePostTitleChange = (e: any) => {
     setPostTitle(e.target.value)
   };
 
-  const handlePostDescChange = (e) => {
+  const handlePostDescChange = (e: any) => {
     setPostDesc(e.target.value)
   };
 
-  const savePost = (e) => {
+  const savePost = (e: any) => {
     e.preventDefault()
     const post = {
       id: selectedPost.id,
@@ -29,7 +36,7 @@ export const EditPostForm = ({selectedPost,editBlogPost,handleEditFormHide}) => 
   }
 
   useEffect(() => {
-    const handleEscape = (e) => {
+    const handleEscape = (e: any) => {
       if (e.key === "Escape") {
         handleEditFormHide();
       }
@@ -82,3 +89,4 @@ export const EditPostForm = ({selectedPost,editBlogPost,handleEditFormHide}) => 
     </>
   );
 }
+export default EditPostForm

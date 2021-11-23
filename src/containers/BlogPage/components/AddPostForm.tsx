@@ -1,20 +1,26 @@
 import "./AddPostForm.css";
 import CancelIcon from "@material-ui/icons/Cancel";
-import { useState } from "react";
+import React,{ useState } from "react";
+import {IPost} from "../BlogPage"
 
-export const AddPostForm = ({ addNewBlogPost, handleAddFormHide }) => {
+interface AddPostProps{
+  addNewBlogPost: (blogPost: IPost) => void;
+  handleAddFormHide: () => void;
+}
+
+const AddPostForm: React.FC<AddPostProps> = ({ addNewBlogPost, handleAddFormHide }) => {
   const [postTitle, setPostTitle] = useState<string>("");
   const [postDesc, setPostDesc] = useState<string>("");
 
-  const handlePostTitleChange = (e) => {
+  const handlePostTitleChange = (e: any) => {
     setPostTitle(e?.target?.value);
   };
 
-  const handlePostDescChange = (e) => {
+  const handlePostDescChange = (e: any) => {
     setPostDesc(e?.target?.value);
   };
 
-  const createPost = (e) => {
+  const createPost = (e: any) => {
     e.preventDefault();
     const post = {
       title: postTitle,
@@ -27,7 +33,7 @@ export const AddPostForm = ({ addNewBlogPost, handleAddFormHide }) => {
   };
 
   useState(() => {
-    const handleEscape = (e) => {
+    const handleEscape = (e: any) => {
       if (e.key === "Escape") {
         handleAddFormHide();
       }
@@ -79,3 +85,4 @@ export const AddPostForm = ({ addNewBlogPost, handleAddFormHide }) => {
     </>
   );
 };
+export default AddPostForm;

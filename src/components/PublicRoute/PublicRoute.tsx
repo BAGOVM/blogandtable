@@ -1,7 +1,13 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router'
 
- const PublicRoute = ({ isLoggedIn, children, rest }) => {
+ interface PublicRouteProps{
+   isLoggedIn: boolean;
+   children: React.ReactChild | React.ReactNode;
+   rest: any | any[];
+ }
+
+ const PublicRoute: React.FC<PublicRouteProps> = ({ isLoggedIn, children, rest }) => {
   return (
     <Route
       {...rest}

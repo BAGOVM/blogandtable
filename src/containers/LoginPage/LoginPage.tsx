@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React,{ useState } from "react";
 import { useHistory } from "react-router";
 import "./LoginPage.css";
 
@@ -25,7 +25,7 @@ const LoginPage: React.FC<LoginPageProps> = ({
     setPassword(e.target.value)
   }
 
-  const handleLogIn = (e) => {
+  const handleLogIn = (e: any) => {
     e.preventDefault();
 
     if (login === 'admin' && password === '123456') {
@@ -38,6 +38,7 @@ const LoginPage: React.FC<LoginPageProps> = ({
     }
     else {
       alert('Введите правильный логин или пароль!');
+      setPassword('')
       return false
     }
   }

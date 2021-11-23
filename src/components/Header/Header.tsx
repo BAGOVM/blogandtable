@@ -1,11 +1,20 @@
 import { NavLink } from 'react-router-dom';
 import './Header.css';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+import React from "react"
+import { IPost } from '../../containers/BlogPage/BlogPage';
 
-export const Header = ({ isLoggedIn, setIsLoggedIn, userName }) => {
+interface HeaderProps{
+  isLoggedIn: boolean;
+  setIsLoggedIn: (blogPost: IPost) => void;
+  userName: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ isLoggedIn, setIsLoggedIn, userName }) => {
   const handleLogOut = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userName');
+    //@ts-ignore
     setIsLoggedIn(false);
   };
 
@@ -31,3 +40,4 @@ export const Header = ({ isLoggedIn, setIsLoggedIn, userName }) => {
     </header>
   );
 };
+export default Header;

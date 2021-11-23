@@ -1,7 +1,14 @@
-const Footer = ({ year }) => {
+import React from "react"
+import "../Footer/Footer.css"
+
+interface FooterProps{
+  year: number;
+}
+
+const Footer: React.FC<FooterProps> = ({ year }) => {
   return (
     <footer>
-      <span>© React Blog - {year}</span>
+      <span className="footer">© React Blog - {year}</span>
     </footer>
   );
 };

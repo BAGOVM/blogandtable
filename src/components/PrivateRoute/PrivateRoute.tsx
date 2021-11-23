@@ -1,7 +1,13 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router'
 
-const PrivateRoute = ({ isLoggedIn, children, path }) => {
+interface PrivateRouteProps{
+  isLoggedIn: boolean;
+  children: React.ReactChild | React.ReactNode;
+  path: string;
+}
+
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ isLoggedIn, children, path }) => {
   return (
     <Route
       path={path}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react"
 import { Redirect, useHistory, useLocation } from 'react-router';
 import { Result, Button } from "antd";
 

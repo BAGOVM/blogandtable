@@ -1,8 +1,19 @@
 import './BlogCard.css';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
+import React from "react"
 
-const BlogCard = ({
+interface BlogCardProps{
+  title: string;
+  description: string;
+  date: any;
+  deletePost: any;
+  handleEditFormShow: any;
+  handleSelectPost: any;
+  isAdmin: boolean;
+}
+
+const BlogCard: React.FC<BlogCardProps> = ({
   title,
   description,
   date,

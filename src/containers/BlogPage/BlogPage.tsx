@@ -1,29 +1,44 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import React ,{ useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import './BlogPage.css';
-import { AddPostForm } from './components/AddPostForm';
+import AddPostForm from './components/AddPostForm';
 import BlogCard from './components/BlogCard';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { EditPostForm } from './components/EditPostForm';
+import EditPostForm from './components/EditPostForm';
 import { postsUrl } from '../../shared/projectData';
-import { Header } from '../../components/Header/Header';
+import Header from '../../components/Header/Header';
 import { Pagination } from 'antd';
 
-let source;
+let source: any;
 
-export const BlogPage = ({ userName, isLoggedIn, setIsLoggedIn }) => {
+interface BlogPageProps{
+  userName: string;
+  isLoggedIn: boolean;
+  setIsLoggedIn: (blogPost: IPost) => void;
+}
+
+export interface IPost{
+  id?: number;
+  title?: string;
+  description?: string;
+  date?: any;
+  liked?: boolean;
+}
+
+const BlogPage: React.FC<BlogPageProps> = ({ userName, isLoggedIn, setIsLoggedIn }) => {
+
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
   const [showEditForm, setShowEditForm] = useState<boolean>(false);
   const [blogArr, setBlogArr] = useState<any[]>([]);
   const [isPending, setIsPending] = useState<boolean>(false);
-  const [selectedPost, setSelectedPost] = useState<any>({});
+  const [selectedPost, setSelectedPost] = useState<IPost>({});
 
   const history = useHistory();
   const location = useLocation();
 
-  const [totalElementsCount, setTotalElementsCount] = useState(0);
-  const [currentPageElements, setCurrentPageElements] = useState([])
+  const [totalElementsCount, setTotalElementsCount] = useState<number>(0);
+  const [currentPageElements, setCurrentPageElements] = useState<number[]>([])
   let nedValue: any = location?.search.split('=')[1];
   const elementsPerPage = 2;
   const [offset, setOffset] = useState(nedValue * elementsPerPage || 0);
@@ -44,11 +59,10 @@ export const BlogPage = ({ userName, isLoggedIn, setIsLoggedIn }) => {
       });
   };
 
-  const handlePageClick = (pageNumber) => {
+  const handlePageClick = (pageNumber: number) => {
     const offset = (pageNumber - 1) * elementsPerPage;
     history.push(`/blog?page=${pageNumber}`)
     setOffset(offset);
-    console.log(blogArr.slice(offset, offset + elementsPerPage))
     setCurrentPageElements(blogArr.slice(offset, offset + elementsPerPage))
   };
 
@@ -61,9 +75,9 @@ export const BlogPage = ({ userName, isLoggedIn, setIsLoggedIn }) => {
         source.cancel('Axios get canceled');
       }
     };
-  }, []);
+  });
 
-  const deletePost = (blogPost) => {
+  const deletePost = (blogPost: IPost) => {
     if (window.confirm(`Удалить ${blogPost.title}?`)) {
       setIsPending(true);
       axios
@@ -78,7 +92,7 @@ export const BlogPage = ({ userName, isLoggedIn, setIsLoggedIn }) => {
     }
   };
 
-  const addNewBlogPost = (blogPost) => {
+  const addNewBlogPost = (blogPost: IPost) => {
     setIsPending(true);
     axios
       .post(postsUrl, blogPost)
@@ -91,7 +105,7 @@ export const BlogPage = ({ userName, isLoggedIn, setIsLoggedIn }) => {
       });
   };
 
-  const editBlogPost = (updatedBlogPost) => {
+  const editBlogPost = (updatedBlogPost: IPost) => {
     setIsPending(true);
     axios
       .put(`${postsUrl}${updatedBlogPost.id}`, updatedBlogPost)
@@ -104,35 +118,27 @@ export const BlogPage = ({ userName, isLoggedIn, setIsLoggedIn }) => {
       });
   };
 
-  const handleAddFormShow = () => {
-    setShowAddForm(true);
-  };
-
-  const handleAddFormHide = () => {
-    setShowAddForm(false);
-  };
-
-  const handleEditFormShow = () => {
-    setShowEditForm(true);
-  };
-
-  const handleEditFormHide = () => {
-    setShowEditForm(false);
-  };
-
-  const handleSelectPost = (blogPost) => {
-    setSelectedPost(blogPost);
-  };
+  const handleAddFormShow = () => setShowAddForm(true);
+  
+  const handleAddFormHide = () => setShowAddForm(false);
+  
+  const handleEditFormShow = () => setShowEditForm(true);
+  
+  const handleEditFormHide = () => setShowEditForm(false);
+  
+  const handleSelectPost = (blogPost: IPost) => setSelectedPost(blogPost);
+  
+  
 
   const isAdmin = isLoggedIn && userName === 'admin';
 
-  const blogPosts = currentPageElements.map((item) => {
+  const blogPosts = currentPageElements.map((item: any) => {
     return (
       <BlogCard
-        key={item.id}
-        title={item.title}
-        description={item.description}
-        date={item.date}
+        key={item?.id}
+        title={item?.title}
+        description={item?.description}
+        date={item?.date}
         deletePost={() => deletePost(item)}
         handleEditFormShow={handleEditFormShow}
         handleSelectPost={() => handleSelectPost(item)}
@@ -200,3 +206,4 @@ export const BlogPage = ({ userName, isLoggedIn, setIsLoggedIn }) => {
     </>
   );
 };
+export default BlogPage;
